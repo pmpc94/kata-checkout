@@ -1,6 +1,6 @@
 # kata-checkout
 
-This template should help get you started developing with Vue 3 in Vite.
+Kata checkout mini home project
 
 ## Recommended IDE Setup
 
