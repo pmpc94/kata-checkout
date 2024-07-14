@@ -1,6 +1,6 @@
 <template>
     <div class="inset-1/2 absolute text-5xl">
-        {{ totalCost }}£
+        <div>{{ totalCost }}£</div>
     </div>
 </template>
 
@@ -13,5 +13,4 @@ const checkoutStore = useCheckoutStore()
 
 const { getTotalCost } = storeToRefs(checkoutStore)
 const totalCost = computed(() => getTotalCost.value)
-
 </script>

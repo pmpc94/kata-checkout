@@ -1,5 +1,5 @@
 import { NAMES, PRICES } from '@/consts'
-import { calculateSpecialPrice } from '@/helper'
+import { checkIfBundleApplies, calculateSpecialPrice } from '@/helper'
 import type { ItemType } from '@/types'
 import { defineStore } from 'pinia'
 
@@ -26,13 +26,13 @@ export const useCheckoutStore = defineStore('checkout', {
       if (item.quantity > 0) {
         item.quantity--
         item.subTotal = calculateSpecialPrice(item)
+        checkIfBundleApplies(this.$state.items, item)
       }
     },
     increment(item: ItemType) {
       item.quantity++
-
-      const bundleItems = this.$state.items.filter(item => item.name === NAMES.ITEM_D && item.quantity > 0 || item.name === NAMES.ITEM_E && item.quantity > 0)
-      item.subTotal = calculateSpecialPrice(item, bundleItems)
+      item.subTotal = calculateSpecialPrice(item)
+      checkIfBundleApplies(this.$state.items, item)
     }
   }
 })

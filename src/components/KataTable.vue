@@ -5,7 +5,6 @@
                     <th class="py-3 px-6 text-left">Item Name</th>
                     <th class="py-3 px-6 text-left">Item Price</th>
                     <th class="py-3 px-6 text-left">Quantity</th>
-                    <th class="py-3 px-6 text-left">Total</th>
                 </tr>
             </thead>
             <tbody v-for="item in items" :key="item.name">
@@ -17,7 +16,6 @@
                         <span>{{ item.quantity }}</span>
                         <button class="bg-green-400 text-white px-2 py-1 rounded" @click="incrementItemQuantity(item)">+</button>
                     </td>
-                    <td class="py-4 px-6">£{{ item.subTotal }}</td>
                 </tr>
             </tbody>
         </table>
