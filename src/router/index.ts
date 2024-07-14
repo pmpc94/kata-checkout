@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CheckoutView from '@/views/CheckoutView.vue'
+import KataCheckoutView from '@/views/KataCheckoutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,8 +7,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'checkout',
-      component: CheckoutView
-    }
+      component: KataCheckoutView
+    },
   ]
 })
 
