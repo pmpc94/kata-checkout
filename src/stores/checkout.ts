@@ -30,7 +30,9 @@ export const useCheckoutStore = defineStore('checkout', {
     },
     increment(item: ItemType) {
       item.quantity++
-      item.subTotal = calculateSpecialPrice(item)
+
+      const bundleItems = this.$state.items.filter(item => item.name === NAMES.ITEM_D && item.quantity > 0 || item.name === NAMES.ITEM_E && item.quantity > 0)
+      item.subTotal = calculateSpecialPrice(item, bundleItems)
     }
   }
 })
