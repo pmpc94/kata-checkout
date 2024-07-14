@@ -1,25 +1,25 @@
-import { NAMES, PRICES } from '@/consts'
+import { NAMES, PRICES, SPECIAL_PROMO } from '@/consts'
 import type { ItemType } from '@/types'
 
-export const calculateSpecialPrice = (item: ItemType): number => {
+export const calculateSpecialPrice = (items: ItemType, item: ItemType): number => {
     switch (item.name) {
-        case NAMES.ITEM_A: item.subTotal = calculateSpecialItemA(item.quantity);
+        case NAMES.ITEM_A: item.subTotal = calculateNormalPrice(item);
             break
         case NAMES.ITEM_B: item.subTotal = calculateSpecialItemB(item.quantity);
             break
         case NAMES.ITEM_C: item.subTotal = calculateSpecialItemC(item.quantity);
             break
-        case NAMES.ITEM_D: item.subTotal = calculateSpecialItemD(item.quantity);
+        case NAMES.ITEM_D: item.subTotal = calculateSpecialBundle(items, item);
             break
-        case NAMES.ITEM_E: item.subTotal = calculateSpecialItemE(item.quantity);
+        case NAMES.ITEM_E: item.subTotal = calculateSpecialBundle(items, item);
             break
     }
 
     return item.subTotal
 }
 
-const calculateSpecialItemA = (quantity: number) => {
-    return quantity * PRICES.ITEM_A
+const calculateNormalPrice = (item: ItemType) => {
+    return item.quantity * PRICES[`ITEM_${item.name}`]
 }
 
 const calculateSpecialItemB = (quantity: number) => {
@@ -38,15 +38,7 @@ const calculateSpecialItemC = (quantity: number) => {
     return (quantity * PRICES.ITEM_C) - freeItems * PRICES.ITEM_C
 }
 
-const calculateSpecialItemD = (quantity: number) => {
-    return quantity * PRICES.ITEM_D
-}
-
-const calculateSpecialItemE = (quantity: number) => {
-    return quantity * PRICES.ITEM_E
-}
-
-export const checkIfBundleApplies = (items: ItemType, item: ItemType) => {
+export const calculateSpecialBundle = (items: ItemType, item: ItemType) => {
     const itemD = items.find(item => item.name === NAMES.ITEM_D)
     const itemE = items.find(item => item.name === NAMES.ITEM_E)
     if (itemD?.quantity > 0 && itemE?.quantity > 0) {
@@ -54,9 +46,10 @@ export const checkIfBundleApplies = (items: ItemType, item: ItemType) => {
         const previousValue = itemD.subTotal + itemE.subTotal
         const minItem = itemD.quantity <= itemE.quantity ? itemD : itemE;
         if (diffInQuantity === 0) {
-            item.subTotal = item.subTotal - previousValue + (itemD.quantity * 3)
+            return item.subTotal - previousValue + (itemD.quantity * SPECIAL_PROMO.PRICE)
         } else {
-            item.subTotal = item.subTotal - previousValue + (minItem.quantity * 3) + (item.price * diffInQuantity)
+            return item.subTotal - previousValue + (minItem.quantity * SPECIAL_PROMO.PRICE) + (item.price * diffInQuantity)
         }
     }
+    return calculateNormalPrice(item)
 }

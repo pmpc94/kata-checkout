@@ -13,3 +13,7 @@ export const NAMES = Object.freeze({
     ITEM_D: "D",
     ITEM_E: "E"
 })
+
+export const SPECIAL_PROMO = Object.freeze({
+    PRICE: 3.0
+})
