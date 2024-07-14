@@ -3,4 +3,5 @@ export type ItemType = {
     price: number
     quantity: number
     subTotal: number
+    specialPromotion?: string
 }

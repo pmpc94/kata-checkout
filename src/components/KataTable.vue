@@ -11,13 +11,13 @@
             <tbody v-for="item in items" :key="item.name">
                 <tr class="border-b border-gray-200">
                     <td class="py-4 px-6">{{ item.name }}</td>
-                    <td class="py-4 px-6">£{{ item.price }}</td>
+                    <td class="py-4 px-6">£{{ getPrice(item) }}</td>
                     <td class="py-4 px-6 flex items-center space-x-3">
                         <button class="bg-red-400 text-white px-2 py-1 rounded" @click="decrementItemQuantity(item)">-</button>
                         <span>{{ item.quantity }}</span>
                         <button class="bg-green-400 text-white px-2 py-1 rounded" @click="incrementItemQuantity(item)">+</button>
                     </td>
-                    <td class="py-4 px-6">£{{ item.price }}</td>
+                    <td class="py-4 px-6">£{{ item.subTotal }}</td>
                 </tr>
             </tbody>
         </table>
@@ -39,6 +39,13 @@ const decrementItemQuantity = (item: ItemType) => {
 
 const incrementItemQuantity = (item: ItemType) => {
     increment(item)
+}
+
+const getPrice = (item) => {
+    if (item.specialPromotion) {
+        return item.price + ` (${ item.specialPromotion })`
+    }
+    return item.price
 }
 
 </script>

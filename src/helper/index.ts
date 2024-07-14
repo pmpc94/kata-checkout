@@ -1,25 +1,28 @@
+import { NAMES, PRICES } from '@/consts'
 import type { ItemType } from '@/types'
 
 export const calculateSpecialPrice = (item: ItemType): number => {
-    
     switch (item.name) {
-        case "B": item.total = calculateSpecialItemB(item.quantity, item.price)
+        case NAMES.ITEM_A: item.subTotal = calculateSpecialItemA(item.quantity);
+            break
+        case NAMES.ITEM_B: item.subTotal = calculateSpecialItemB(item.quantity);
+            break
     }
 
-    return item.total
+    return item.subTotal
 }
 
-const calculateSpecialItemB = (quantity: number, price: number) => {
+const calculateSpecialItemA = (quantity: number) => {
+    return quantity * PRICES.ITEM_A
+}
+
+const calculateSpecialItemB = (quantity: number) => {
     const numberAppliedSpecialPrice = quantity % 2
-
-    if (numberAppliedSpecialPrice < 1) {
-        return quantity * price
-    }
-
     if (numberAppliedSpecialPrice === 0) {
-        return numberAppliedSpecialPrice * 1.25
+        return (quantity / 2) * 1.25
+    } else if (quantity > 2) {
+        return Math.floor((quantity / 2)) * 1.25 + PRICES.ITEM_B
     } else {
-        return Math.floor( quantity / 2) + 0.75
+        return PRICES.ITEM_B
     }
-        
 }
